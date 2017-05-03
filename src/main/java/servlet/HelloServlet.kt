@@ -14,7 +14,7 @@ class HelloServlet : HttpServlet() {
     override fun doGet(req: HttpServletRequest, resp: HttpServletResponse) {
         resp.setHeader("Content-Type", "text/html;charset=utf-8")
         val out = resp.outputStream
-        out.write("Hello, ${req.getParameter("name")}!".toByteArray())
+        out.write("Hello, ${req.getParameter("name")} ${req.getParameter("lastName")}!".toByteArray())
         out.flush()
         out.close()
     }
