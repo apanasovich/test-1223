@@ -20,7 +20,7 @@ object Main {
             webPort = "8080"
         }
 
-        tomcat.setPort(Integer.valueOf(webPort)!!)
+        tomcat.setPort(Integer.valueOf(webPort))
 
         val ctx = tomcat.addWebapp("/", File(webappDirLocation).absolutePath) as StandardContext
         println("configuring app with basedir: " + File("./" + webappDirLocation).absolutePath)
