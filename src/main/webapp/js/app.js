@@ -52,7 +52,7 @@ class App extends React.Component {
                                onChange={this.changeName} />
                     </label>
                     <br/>
-                    <input type="submit"/>
+                    <input type="submit" value="Отправить на сервер"/>
                 </form>
                 <Greeting greeting={this.state.greeting}/>
             </div>
