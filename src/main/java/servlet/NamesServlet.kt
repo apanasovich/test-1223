@@ -19,7 +19,7 @@ class NamesServlet : HttpServlet() {
 
         val names = mutableListOf<String>()
 
-        DriverManager.getConnection(System.getenv("DATABASE_URL")).use {
+        DriverManager.getConnection("jdbc:" + System.getenv("DATABASE_URL")).use {
             it.prepareCall("CREATE SCHEMA IF NOT EXISTS TEST1223").execute()
             it.prepareCall("CREATE TABLE IF NOT EXISTS TEST1223.ALL_NAMES (NAME VARCHAR(50))").execute()
 
@@ -40,7 +40,7 @@ class NamesServlet : HttpServlet() {
     override fun doPost(req: HttpServletRequest, resp: HttpServletResponse) {
         resp.setHeader("Content-Type", "application/json;charset=utf-8")
 
-        DriverManager.getConnection(System.getenv("DATABASE_URL")).use {
+        DriverManager.getConnection("jdbc:" + System.getenv("DATABASE_URL")).use {
             it.prepareCall("CREATE SCHEMA IF NOT EXISTS TEST1223").execute()
             it.prepareCall("CREATE TABLE IF NOT EXISTS TEST1223.ALL_NAMES (NAME VARCHAR(50))").execute()
 
