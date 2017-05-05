@@ -1,1 +1,2 @@
-start target\bin\webapp.bat
+call mvn clean package
+call target\bin\webapp.bat

@@ -2,25 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width">
+    <meta name="viewport" content="width=device-width">
     <title>Cho Kak App</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.1/react.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.1/react-dom.min.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
 </head>
 <body>
 
-<div>
-    <h3>Chyo Kak?</h3>
-    <form action="/hello" method="get">
-        <label>Your 1st Name:<br/>
-            <input id="name" name="name"/>
-        </label>
-		<br/>
-        <label>Your Last Name:<br/>
-            <input id="lastName" name="lastName"/>
-        </label>
-		<br/>
-        <input type="submit"/>
-    </form>
-</div>
+<div id="root"></div>
 
+<script type="text/babel" src="js/app.js"></script>
 </body>
 </html>
