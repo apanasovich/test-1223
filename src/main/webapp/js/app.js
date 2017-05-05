@@ -1,27 +1,60 @@
 class Toolbar extends React.Component {
     render() {
         return (
-            <h3>Chyo Kak? {this.props.name}</h3>
+            <h3>Чё как, {this.props.name}?</h3>
+        );
+    }
+}
+
+class Greeting extends React.Component {
+    render() {
+        return (
+            <h4>{this.props.greeting}</h4>
         );
     }
 }
 
 class App extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {name: "", greeting: ""};
+        this.changeName = this.changeName.bind(this);
+        this.submitClick = this.submitClick.bind(this);
+    }
+
+    changeName(e) {
+        this.setState({name: e.target.value});
+    }
+
+    submitClick(e) {
+        e.preventDefault();
+        let self = this;
+        $.ajax({
+            url: "/hello",
+            data: {
+                name: this.state.name
+            },
+            success: function (result) {
+                self.setState({greeting: result.msg});
+            }
+        });
+    }
+
     render() {
         return (
             <div>
-                <Toolbar name={this.props.name}/>
-                <form action="/hello" method="get">
-                    <label>Your 1st Name:<br/>
-                        <input id="name" name="name"/>
-                    </label>
-                    <br/>
-                    <label>Your Last Name:<br/>
-                        <input id="lastName" name="lastName"/>
+                <Toolbar name={this.state.name}/>
+                <form onSubmit={this.submitClick}>
+                    <label>Кто ты?<br/>
+                        <input type="text"
+                               value={this.state.name}
+                               onChange={this.changeName} />
                     </label>
                     <br/>
                     <input type="submit"/>
                 </form>
+                <Greeting greeting={this.state.greeting}/>
             </div>
         );
     }

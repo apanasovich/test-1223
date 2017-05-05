@@ -12,9 +12,9 @@ class HelloServlet : HttpServlet() {
 
     @Throws(ServletException::class, IOException::class)
     override fun doGet(req: HttpServletRequest, resp: HttpServletResponse) {
-        resp.setHeader("Content-Type", "text/html;charset=utf-8")
+        resp.setHeader("Content-Type", "application/json;charset=utf-8")
         val out = resp.outputStream
-        out.write("Hello, Gays! Боброго времени суток тебе, ${req.getParameter("name")} ${req.getParameter("lastName")}!".toByteArray())
+        out.write("""{"msg":"Боброго времени суток тебе, ${req.getParameter("name")}!"}""".toByteArray())
         out.flush()
         out.close()
     }
