@@ -29,5 +29,7 @@ fun Connection.call(q: String, vararg args: Any) {
 fun Connection.update(q: String, vararg args: Any): Int {
     val stmt = prepareCall(q)
     args.forEachIndexed { i, v -> stmt.setObject(i + 1, v) }
-    return stmt.executeUpdate()
+    val res = stmt.executeUpdate()
+    commit()
+    return res
 }
