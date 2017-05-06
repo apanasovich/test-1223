@@ -12,7 +12,7 @@ fun Connection.select(q: String, vararg args: Any): List<Map<String, Any?>> {
         while (resultSet.next()) {
             val map = mutableMapOf<String, Any?>()
             for (col in 1..columnCount) {
-                map[metaData.getColumnName(col)] = resultSet.getObject(col)
+                map[metaData.getColumnLabel(col)] = resultSet.getObject(col)
             }
             result += map
         }
