@@ -45,7 +45,7 @@ class NamesServlet : HttpServlet() {
             it.prepareCall("CREATE TABLE IF NOT EXISTS TEST1223.ALL_NAMES (NAME VARCHAR(50))").execute()
 
             val call = it.prepareCall("INSERT INTO TEST1223.ALL_NAMES VALUES(?)")
-            call.setString(1, req.getParameter("value")!!)
+            call.setString(1, req.getParameter("value") ?: throw IllegalArgumentException("'value' not provided"))
             resp.outputStream.use { out ->
                 mapper.writeValue(out, mapOf("inserted" to call.executeUpdate()))
                 out.flush()
