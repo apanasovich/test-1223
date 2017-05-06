@@ -1,6 +1,9 @@
 package servlet
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import db.call
+import db.select
+import db.update
 import java.io.IOException
 import java.sql.DriverManager
 import javax.servlet.ServletException
@@ -20,15 +23,9 @@ class NamesServlet : HttpServlet() {
         val names = mutableListOf<String>()
 
         DriverManager.getConnection(System.getenv("JDBC_DATABASE_URL")).use {
-            it.prepareCall("CREATE SCHEMA IF NOT EXISTS TEST1223").execute()
-            it.prepareCall("CREATE TABLE IF NOT EXISTS TEST1223.ALL_NAMES (NAME VARCHAR(50))").execute()
-
-            val rs = it.prepareStatement("SELECT NAME FROM TEST1223.ALL_NAMES ORDER BY NAME").executeQuery()
-            rs.use {
-                while (rs.next()) {
-                    names += rs.getString(1)
-                }
-            }
+            it.call("CREATE SCHEMA IF NOT EXISTS TEST1223")
+            it.call("CREATE TABLE IF NOT EXISTS TEST1223.ALL_NAMES (NAME VARCHAR(50))")
+            it.select("SELECT NAME FROM TEST1223.ALL_NAMES ORDER BY NAME").forEach { names.add(it["NAME"].toString()) }
         }
 
         resp.outputStream.use { out ->
@@ -41,13 +38,14 @@ class NamesServlet : HttpServlet() {
         resp.setHeader("Content-Type", "application/json;charset=utf-8")
 
         DriverManager.getConnection(System.getenv("JDBC_DATABASE_URL")).use {
-            it.prepareCall("CREATE SCHEMA IF NOT EXISTS TEST1223").execute()
-            it.prepareCall("CREATE TABLE IF NOT EXISTS TEST1223.ALL_NAMES (NAME VARCHAR(50))").execute()
+            it.call("CREATE SCHEMA IF NOT EXISTS TEST1223")
+            it.call("CREATE TABLE IF NOT EXISTS TEST1223.ALL_NAMES (NAME VARCHAR(50))")
 
-            val call = it.prepareCall("INSERT INTO TEST1223.ALL_NAMES VALUES(?)")
-            call.setString(1, req.getParameter("value") ?: throw IllegalArgumentException("'value' not provided"))
+            val count = it.update(
+                    "INSERT INTO TEST1223.ALL_NAMES VALUES(?)",
+                    req.getParameter("value") ?: throw IllegalArgumentException("'value' not provided"))
             resp.outputStream.use { out ->
-                mapper.writeValue(out, mapOf("inserted" to call.executeUpdate()))
+                mapper.writeValue(out, mapOf("inserted" to count))
                 out.flush()
             }
         }
