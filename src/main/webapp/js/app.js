@@ -18,7 +18,7 @@ class TaskList extends React.Component {
             <div>
                 <h4>Task List</h4>
                 <div>
-                    <button onClick={openCreateNewTaskForm}/>
+                    <button onClick={this.props.openCreateNewTaskForm}/>
                 </div>
                 {this.state.tasks.map(task => (
                     <Task task={task} />
@@ -75,7 +75,7 @@ class App extends React.Component {
     render() {
         return (
             <div>
-                <TaskList/>
+                <TaskList openCreateNewTaskForm={this.openCreateNewTaskForm}/>
                 {/*<form onSubmit={this.submitClick}>*/}
                     {/*<label>Кто ты?<br/>*/}
                         {/*<input type="text"*/}
