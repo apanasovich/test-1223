@@ -19,7 +19,9 @@ class TaskList extends React.Component {
             <div>
                 <h2>Task List</h2>
                 <div>
-                    <button onClick={this.props.openCreateNewTaskForm} value="Add Task"/>
+                    <button
+                        className="btn btn-primary"
+                        onClick={this.props.openCreateNewTaskForm}>Add Task</button>
                 </div>
                 {this.state.tasks.map(task => (
                     <Task task={task} />
@@ -33,7 +35,10 @@ class Task extends React.Component {
     render() {
         return (
             <div className="panel panel-default">
-                <div className="panel-heading">#{this.props.task.ID}: {this.props.task.SUMMARY}</div>
+                <div className="panel-heading">
+                    <span className="badge">#{this.props.task.ID}</span>
+                    {this.props.task.SUMMARY}
+                </div>
                 <div className="panel-body">{this.props.task.DESCRIPTION}</div>
             </div>
         );
