@@ -24,9 +24,8 @@ class TaskList extends React.Component {
                         <span className="glyphicon glyphicon-plus"/>
                     </button>
                 </h2>
-                <div>
                 {this.state.tasks.map(task => (
-                    <Task task={task} />
+                    <Task task={task}/>
                 ))}
             </div>
         );
@@ -85,13 +84,13 @@ class App extends React.Component {
             <div>
                 <TaskList openCreateNewTaskForm={this.openCreateNewTaskForm}/>
                 {/*<form onSubmit={this.submitClick}>*/}
-                    {/*<label>Кто ты?<br/>*/}
-                        {/*<input type="text"*/}
-                               {/*value={this.state.name}*/}
-                               {/*onChange={this.changeName} />*/}
-                    {/*</label>*/}
-                    {/*<br/>*/}
-                    {/*<input type="submit" value="Отправить на сервер"/>*/}
+                {/*<label>Кто ты?<br/>*/}
+                {/*<input type="text"*/}
+                {/*value={this.state.name}*/}
+                {/*onChange={this.changeName} />*/}
+                {/*</label>*/}
+                {/*<br/>*/}
+                {/*<input type="submit" value="Отправить на сервер"/>*/}
                 {/*</form>*/}
                 {/*<Greeting greeting={this.state.greeting}/>*/}
             </div>
