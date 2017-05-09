@@ -27,6 +27,14 @@ fun Connection.call(q: String, vararg args: Any) {
     stmt.execute()
 }
 
+fun Connection.insertReturning(q: String, vararg args: Any): Int {
+    val stmt = prepareCall(q)
+    args.forEachIndexed { i, v -> stmt.setObject(i + 1, v) }
+    val res = stmt.executeQuery()
+    if (!autoCommit) commit()
+    return if (res.next()) res.getInt(1) else 0
+}
+
 fun Connection.update(q: String, vararg args: Any): Int {
     val stmt = prepareCall(q)
     args.forEachIndexed { i, v -> stmt.setObject(i + 1, v) }

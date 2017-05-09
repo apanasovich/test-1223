@@ -1,7 +1,7 @@
 package servlet
 
+import db.insertReturning
 import db.select
-import db.update
 import javax.servlet.annotation.WebServlet
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
@@ -16,13 +16,12 @@ class TasksServlet : ServletBase() {
 
     override fun doPost(req: HttpServletRequest, resp: HttpServletResponse) {
         connect().use {
-            val count = it.update(
-                    "INSERT INTO TASKS.TASKS(ID, SUMMARY, DESCRIPTION) " +
-                            "VALUES(TASKS.TASKS_SEQ.nextval, ?, ?)",
+            val id = it.insertReturning(
+                    "INSERT INTO TASKS.TASKS(SUMMARY, DESCRIPTION) VALUES(?, ?) RETURNING ID",
                     req.requiredArg("summary"),
                     req.requiredArg("description"))
 
-            resp.sendJsonOutput(mapOf("inserted" to count))
+            resp.sendJsonOutput(mapOf("inserted" to id))
         }
     }
 }
