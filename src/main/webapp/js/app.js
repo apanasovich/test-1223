@@ -17,12 +17,10 @@ class TaskList extends React.Component {
     render() {
         return (
             <div>
-                <h2>Task List</h2>
+                <h2>Task List <button
+                    className="btn btn-primary"
+                    onClick={this.props.openCreateNewTaskForm}><span className="glyphicon glyphicon-plus"></span></button></h2>
                 <div>
-                    <button
-                        className="btn btn-primary"
-                        onClick={this.props.openCreateNewTaskForm}>Add Task</button>
-                </div>
                 {this.state.tasks.map(task => (
                     <Task task={task} />
                 ))}
