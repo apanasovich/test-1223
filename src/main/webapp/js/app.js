@@ -1,15 +1,40 @@
-class Toolbar extends React.Component {
+class TaskList extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {tasks: []};
+    }
+
+    componentDidMount() {
+        $.ajax({
+            url: "/tasks",
+            success: function (result) {
+                self.setState({tasks: result});
+            }
+        });
+    }
+
     render() {
         return (
-            <h3>Чё как, {this.props.name}?</h3>
+            <div>
+                <h4>Task List</h4>
+                <div>
+                    <button onClick={openCreateNewTaskForm}/>
+                </div>
+                {this.state.tasks.map(task => (
+                    <Task task={task} />
+                ))}
+            </div>
         );
     }
 }
 
-class Greeting extends React.Component {
+class Task extends React.Component {
     render() {
         return (
-            <h4>{this.props.greeting}</h4>
+            <div>
+                <h5>{this.props.task.summary}</h5>
+                <div>{this.props.task.description}</div>
+            </div>
         );
     }
 }
@@ -21,6 +46,12 @@ class App extends React.Component {
         this.state = {name: "", greeting: ""};
         this.changeName = this.changeName.bind(this);
         this.submitClick = this.submitClick.bind(this);
+        this.openCreateNewTaskForm = this.openCreateNewTaskForm.bind(this);
+    }
+
+    openCreateNewTaskForm(e) {
+        e.preventDefault();
+        alert("Zz")
     }
 
     changeName(e) {
@@ -44,20 +75,20 @@ class App extends React.Component {
     render() {
         return (
             <div>
-                <Toolbar name={this.state.name}/>
-                <form onSubmit={this.submitClick}>
-                    <label>Кто ты?<br/>
-                        <input type="text"
-                               value={this.state.name}
-                               onChange={this.changeName} />
-                    </label>
-                    <br/>
-                    <input type="submit" value="Отправить на сервер"/>
-                </form>
-                <Greeting greeting={this.state.greeting}/>
+                <TaskList/>
+                {/*<form onSubmit={this.submitClick}>*/}
+                    {/*<label>Кто ты?<br/>*/}
+                        {/*<input type="text"*/}
+                               {/*value={this.state.name}*/}
+                               {/*onChange={this.changeName} />*/}
+                    {/*</label>*/}
+                    {/*<br/>*/}
+                    {/*<input type="submit" value="Отправить на сервер"/>*/}
+                {/*</form>*/}
+                {/*<Greeting greeting={this.state.greeting}/>*/}
             </div>
         );
     }
 }
 
-ReactDOM.render(<App name="Zzz"/>, document.getElementById("root"));
+ReactDOM.render(<App/>, document.getElementById("root"));
