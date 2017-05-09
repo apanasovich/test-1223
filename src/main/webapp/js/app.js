@@ -18,15 +18,14 @@ class TaskList extends React.Component {
         return (
             <div>
                 <div>
-                    <h2 style={{display: "inline"}}>Task List</h2>
-                    <button
-                        style={{marginLeft: "8px"}}
-                        className="btn btn-primary float-right"
-                        data-toggle="modal" data-target="#taskCreateFormModal"
-                        // onClick={this.props.openCreateNewTaskForm}
-                        >
-                        <span className="glyphicon glyphicon-plus"/>
-                    </button>
+                    <h2>Task List
+                        <button
+                            style={{marginLeft: "8px"}}
+                            className="btn btn-default"
+                            data-toggle="modal" data-target="#taskCreateFormModal">
+                            <span className="glyphicon glyphicon-plus"/>
+                        </button>
+                    </h2>
                 </div>
                 {this.state.tasks.map(task => (
                     <Task task={task}/>
