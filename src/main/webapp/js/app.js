@@ -18,7 +18,7 @@ class TaskList extends React.Component {
     render() {
         return (
             <div>
-                <h4>Task List</h4>
+                <h2>Task List</h2>
                 <div>
                     <button onClick={this.props.openCreateNewTaskForm} value="Add Task"/>
                 </div>
@@ -33,10 +33,10 @@ class TaskList extends React.Component {
 class Task extends React.Component {
     render() {
         return (
-            <div>
-                <h5>Task Summary: {this.props.task.SUMMARY}</h5>
-                <div>{this.props.task.DESCRIPTION}</div>
-            </div>
+            <dl>
+                <dh className="col-sm-12">#{this.props.task.ID}: {this.props.task.SUMMARY}</dh>
+                <dd>{this.props.task.DESCRIPTION}</dd>
+            </dl>
         );
     }
 }
