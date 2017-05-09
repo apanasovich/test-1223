@@ -21,7 +21,7 @@ class TaskList extends React.Component {
                     <button
                         className="btn btn-primary"
                         onClick={this.props.openCreateNewTaskForm}>
-                        <span style="padding-left: 4px;" className="glyphicon glyphicon-plus"/>
+                        <span style={{paddingLeft: "4px"}} className="glyphicon glyphicon-plus"/>
                     </button>
                 </h2>
                 {this.state.tasks.map(task => (
@@ -37,7 +37,7 @@ class Task extends React.Component {
         return (
             <div className="panel panel-default">
                 <div className="panel-heading">
-                    <span className="badge" style="padding-right: 4px;">#{this.props.task.ID}</span>
+                    <span className="badge" style={{paddingRight: "4px"}}>#{this.props.task.ID}</span>
                     {this.props.task.SUMMARY}
                 </div>
                 <div className="panel-body">{this.props.task.DESCRIPTION}</div>
