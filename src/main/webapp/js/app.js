@@ -39,7 +39,7 @@ class Task extends React.Component {
             <div className="panel panel-default">
                 <div className="panel-heading">
                     <span className="badge badge-primary" style={{marginRight: "8px"}}>#{this.props.task.ID}</span>
-                    {this.props.task.SUMMARY}
+                    <strong>{this.props.task.SUMMARY}</strong>
                 </div>
                 <div className="panel-body">{this.props.task.DESCRIPTION}</div>
             </div>
