@@ -19,9 +19,10 @@ class TaskList extends React.Component {
             <div>
                 <h2>Task List
                     <button
+                        style={{marginLeft: "8px"}}
                         className="btn btn-primary"
                         onClick={this.props.openCreateNewTaskForm}>
-                        <span style={{marginLeft: "8px"}} className="glyphicon glyphicon-plus"/>
+                        <span className="glyphicon glyphicon-plus"/>
                     </button>
                 </h2>
                 {this.state.tasks.map(task => (
