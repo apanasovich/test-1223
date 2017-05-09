@@ -17,13 +17,15 @@ class TaskList extends React.Component {
     render() {
         return (
             <div>
-                <h2>Task List</h2>
-                <button
-                    style={{marginLeft: "8px", float: "right"}}
-                    className="btn btn-primary"
-                    onClick={this.props.openCreateNewTaskForm}>
-                    <span className="glyphicon glyphicon-plus"/>
-                </button>
+                <div className="row">
+                    <h2 className="col-sm-11">Task List</h2>
+                    <button
+                        style={{marginLeft: "8px", float: "right"}}
+                        className="btn btn-primary col-sm-1 float-right"
+                        onClick={this.props.openCreateNewTaskForm}>
+                        <span className="glyphicon glyphicon-plus"/>
+                    </button>
+                </div>
                 {this.state.tasks.map(task => (
                     <Task task={task}/>
                 ))}
