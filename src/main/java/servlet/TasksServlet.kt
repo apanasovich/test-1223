@@ -21,7 +21,7 @@ class TasksServlet : ServletBase() {
                     req.requiredArg("summary"),
                     req.requiredArg("description"))
 
-            resp.sendJsonOutput(mapOf("inserted" to id))
+            resp.sendJsonOutput(mapOf("ID" to id))
         }
     }
 }
