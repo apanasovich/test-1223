@@ -1,5 +1,6 @@
 package db
 
+import java.io.InputStreamReader
 import java.sql.Connection
 
 fun Connection.select(q: String, vararg args: Any): List<Map<String, Any?>> {
@@ -30,6 +31,22 @@ fun Connection.update(q: String, vararg args: Any): Int {
     val stmt = prepareCall(q)
     args.forEachIndexed { i, v -> stmt.setObject(i + 1, v) }
     val res = stmt.executeUpdate()
+    commit()
+    return res
+}
+
+fun Connection.batch(path: String): IntArray {
+    val stmt = createStatement()
+    Thread.currentThread().contextClassLoader.let { cl ->
+        InputStreamReader(cl.getResourceAsStream(path)).use {
+            val text = it.readText()
+            val statements = text.replace("\r", "").split(Regex("\n/\n?"))
+            statements
+                    .filter { it.isNotBlank() }
+                    .forEach(stmt::addBatch)
+        }
+    }
+    val res = stmt.executeBatch()
     commit()
     return res
 }
