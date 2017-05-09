@@ -8,9 +8,7 @@ class TaskList extends React.Component {
         let self = this;
         $.ajax({
             url: "/tasks",
-            success: function (result) {
-                self.setState({tasks: result});
-            }
+            success: result => self.setState({tasks: result})
         });
     }
 
