@@ -31,7 +31,7 @@ fun Connection.update(q: String, vararg args: Any): Int {
     val stmt = prepareCall(q)
     args.forEachIndexed { i, v -> stmt.setObject(i + 1, v) }
     val res = stmt.executeUpdate()
-    commit()
+    if (!autoCommit) commit()
     return res
 }
 
@@ -47,6 +47,6 @@ fun Connection.batch(path: String): IntArray {
         }
     }
     val res = stmt.executeBatch()
-    commit()
+    if (!autoCommit) commit()
     return res
 }
