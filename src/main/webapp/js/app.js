@@ -8,6 +8,7 @@ class TaskList extends React.Component {
         $.ajax({
             url: "/tasks",
             success: function (result) {
+                alert(result);
                 self.setState({tasks: result});
             }
         });
@@ -32,7 +33,7 @@ class Task extends React.Component {
     render() {
         return (
             <div>
-                <h5>{this.props.task.summary}</h5>
+                <h5>Task Summary: {this.props.task.summary}</h5>
                 <div>{this.props.task.description}</div>
             </div>
         );
