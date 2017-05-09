@@ -33,10 +33,10 @@ class TaskList extends React.Component {
 class Task extends React.Component {
     render() {
         return (
-            <dl>
-                <dh className="col-sm-12">#{this.props.task.ID}: {this.props.task.SUMMARY}</dh>
-                <dd>{this.props.task.DESCRIPTION}</dd>
-            </dl>
+            <div className="panel panel-default">
+                <div className="panel-heading">#{this.props.task.ID}: {this.props.task.SUMMARY}</div>
+                <div className="panel-body">{this.props.task.DESCRIPTION}</div>
+            </div>
         );
     }
 }
