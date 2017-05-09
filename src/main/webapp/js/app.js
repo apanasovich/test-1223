@@ -17,11 +17,11 @@ class TaskList extends React.Component {
     render() {
         return (
             <div>
-                <div className="row">
-                    <h2 className="col-sm-11">Task List</h2>
+                <div>
+                    <h2 style={{display: "inline"}}>Task List</h2>
                     <button
-                        style={{marginLeft: "8px", float: "right"}}
-                        className="btn btn-primary col-sm-1 float-right"
+                        style={{marginLeft: "8px"}}
+                        className="btn btn-primary float-right"
                         onClick={this.props.openCreateNewTaskForm}>
                         <span className="glyphicon glyphicon-plus"/>
                     </button>
