@@ -5,6 +5,7 @@ class TaskList extends React.Component {
     }
 
     componentDidMount() {
+        let self = this;
         $.ajax({
             url: "/tasks",
             success: function (result) {
