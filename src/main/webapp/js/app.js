@@ -20,7 +20,7 @@ class TaskList extends React.Component {
             <div>
                 <h4>Task List</h4>
                 <div>
-                    <button onClick={this.props.openCreateNewTaskForm}/>
+                    <button onClick={this.props.openCreateNewTaskForm} value="Add Task"/>
                 </div>
                 {this.state.tasks.map(task => (
                     <Task task={task} />
@@ -34,8 +34,8 @@ class Task extends React.Component {
     render() {
         return (
             <div>
-                <h5>Task Summary: {this.props.task.summary}</h5>
-                <div>{this.props.task.description}</div>
+                <h5>Task Summary: {this.props.task.SUMMARY}</h5>
+                <div>{this.props.task.DESCRIPTION}</div>
             </div>
         );
     }
