@@ -8,7 +8,10 @@ function handleInputChange(event) {
 function updateTaskList() {
     $.ajax({
         url: "/tasks",
-        success: result => this.setState({tasks: result})
+        success: result => this.setState({tasks: result}),
+        error: (xhr, textStatus, errorThrown) =>{
+            // Handle error
+        }
     });
 }
 
@@ -62,6 +65,11 @@ class TaskCreateForm extends React.Component {
             },
             success: result => {
                 $("#taskCreateFormModal").modal("hide");
+            },
+            error: (xhr, textStatus, errorThrown) =>{
+                $("#taskCreateFormModal").modal("hide");
+                console.log(errorThrown + textStatus);
+                alert("Error " + xhr.toString());
             }
         });
     }

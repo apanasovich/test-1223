@@ -18,7 +18,9 @@ abstract class ServletBase : HttpServlet() {
     }
 
     protected fun HttpServletRequest.requiredArg(name: String) =
-            getParameter(name) ?: throw IllegalArgumentException("'$name' parameter is not provided")
+            (getParameter(name) ?: throw IllegalArgumentException("'$name' is not provided")).also {
+                if (it.isBlank()) throw IllegalArgumentException("'$name' should not be blank")
+            }
 
     protected fun HttpServletResponse.sendJsonOutput(o: Any) = also {
         setHeader("Content-Type", "application/json;charset=utf-8")
@@ -27,7 +29,7 @@ abstract class ServletBase : HttpServlet() {
             out.flush()
         }
     }
-    
+
     companion object {
         private val cpds = ComboPooledDataSource().also {
             it.jdbcUrl = System.getenv("JDBC_DATABASE_URL")
