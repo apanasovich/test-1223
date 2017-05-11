@@ -162,7 +162,6 @@ class App extends React.Component {
         this.state = {name: "", greeting: ""};
         this.changeName = this.changeName.bind(this);
         this.submitClick = this.submitClick.bind(this);
-        this.openCreateNewTaskForm = this.openCreateNewTaskForm.bind(this);
     }
 
     changeName(e) {
