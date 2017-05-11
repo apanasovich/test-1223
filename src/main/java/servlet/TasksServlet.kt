@@ -28,7 +28,7 @@ class TasksServlet : ServletBase() {
     
     override fun doDelete(req: HttpServletRequest, resp: HttpServletResponse) {
         connect().use {
-            val count = it.update("DELETE FROM TASKS.TASKS WHERE ID = ?", req.requiredArg("id"))
+            val count = it.update("DELETE FROM TASKS.TASKS WHERE ID = ?", req.requiredArg("id").toInt())
             resp.sendJsonOutput(mapOf("DELETED" to count))
         }
     }
