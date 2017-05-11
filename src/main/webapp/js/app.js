@@ -61,7 +61,7 @@ class TaskCreateForm extends React.Component {
                 console.log(errorThrown + textStatus);
                 console.log(xhr);
                 const err = JSON.parse(xhr.responseText);
-                alert("Error " + err.error);
+                alert("Error: " + err.error);
             }
         });
     }
