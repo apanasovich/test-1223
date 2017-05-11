@@ -1,3 +1,11 @@
+function handleInputChange(event) {
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
+    this.setState({[name]: value});
+}
+
+
 class TaskList extends React.Component {
     constructor(props) {
         super(props);
@@ -37,18 +45,10 @@ class TaskCreateForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {summary: "", description: ""};
-        this.handleInputChange = this.handleInputChange.bind(this);
+        this.handleInputChange = handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 	
-	
-handleInputChange(event) {
-    const target = event.target;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
-    const name = target.name;
-    this.setState({[name]: value});
-}
-
     handleSubmit() {
         $.ajax({
             url: "/tasks",
@@ -58,7 +58,7 @@ handleInputChange(event) {
                 description: this.state.description
             },
             success: result => {
-                alert(result);
+                alert("Created task #" + result.ID);
                 $("#taskCreateFormModal").modal("hide");
             }
         });
@@ -111,7 +111,6 @@ class Task extends React.Component {
 }
 
 class App extends React.Component {
-
     constructor(props) {
         super(props);
         this.state = {name: "", greeting: ""};
