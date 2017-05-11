@@ -157,7 +157,7 @@ class Task extends React.Component {
                     <div className="pull-right">
                         <div className="dropdown">
                             <button className="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown">
-                                Actions <span className="glyphicon-menu-hamburger"/>
+                                Actions <span className="glyphicon glyphicon-menu-hamburger"/>
                             </button>
                             <ul className="dropdown-menu dropdown-menu-right">
                                 <li><a href="#" onClick={this.handleDelete}>Delete Task</a></li>
