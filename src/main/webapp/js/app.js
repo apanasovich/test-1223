@@ -1,10 +1,3 @@
-function handleInputChange(event) {
-    const target = event.target;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
-    const name = target.name;
-    this.setState({[name]: value});
-}
-
 class TaskList extends React.Component {
     constructor(props) {
         super(props);
@@ -44,9 +37,17 @@ class TaskCreateForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {summary: "", description: ""};
-        this.handleInputChange = handleInputChange.bind(this);
+        this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
+	
+	
+handleInputChange(event) {
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
+    this.setState({[name]: value});
+}
 
     handleSubmit() {
         $.ajax({
