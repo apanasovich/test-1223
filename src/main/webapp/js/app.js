@@ -128,6 +128,30 @@ class TaskCreateForm extends React.Component {
 }
 
 class Task extends React.Component {
+    constructor(props) {
+        super(props);
+        this.handleDelete = this.handleDelete.bind(this);
+    }
+
+    handleDelete(e) {
+        $.ajax({
+            url: "/tasks",
+            type: "DELETE",
+            data: {
+                id: this.props.task.ID
+            },
+            success: result => {
+                alert("Deleted");
+            },
+            error: (xhr, textStatus, errorThrown) => {
+                console.log(errorThrown + textStatus);
+                console.log(xhr);
+                const err = JSON.parse(xhr.responseText);
+                alert("Error: " + err.error);
+            }
+        });
+    }
+
     render() {
         return (
             <div className="panel panel-default">
@@ -139,8 +163,8 @@ class Task extends React.Component {
                             <button className="btn btn-primary btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
                                 <span className="caret"/>
                             </button>
-                            <ul className="dropdown-menu">
-                                <li><a href="#">Delete</a></li>
+                            <ul className="dropdown-menu dropdown-menu-right">
+                                <li><a href="#" onClick={this.handleDelete}>Delete Task</a></li>
                                 <li><a href="#">...</a></li>
                                 <li><a href="#">...</a></li>
                             </ul>
