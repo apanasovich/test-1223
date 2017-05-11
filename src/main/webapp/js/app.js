@@ -148,8 +148,8 @@ class NavBar extends React.Component {
                                     <i className="glyphicon glyphicon-search"/>
                                 </button>
                             </div>
-                        {/*</div>*/}
-                        {/*<div className="input-group">*/}
+                        </div>
+                        <div className="input-group">
                             <button className="btn btn-danger navbar-btn"
                                     data-toggle="modal"
                                     data-target="#taskCreateFormModal">
