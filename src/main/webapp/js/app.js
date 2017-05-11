@@ -140,11 +140,6 @@ class NavBar extends React.Component {
                         <li><a href="#">Page 1</a></li>
                         {/*<li><a href="#">Page 2</a></li>*/}
                     </ul>
-                    <button className="btn btn-success navbar-btn"
-                            data-toggle="modal"
-                            data-target="#taskCreateFormModal">
-                        <span className="glyphicon glyphicon-plus"/> Create
-                    </button>
                     <form className="navbar-form navbar-left">
                         <div className="input-group">
                             <input type="text" className="form-control" placeholder="Search"/>
@@ -153,6 +148,13 @@ class NavBar extends React.Component {
                                     <i className="glyphicon glyphicon-search"/>
                                 </button>
                             </div>
+                        </div>
+                        <div className="input-group">
+                            <button className="btn btn-success navbar-btn"
+                                    data-toggle="modal"
+                                    data-target="#taskCreateFormModal">
+                                <span className="glyphicon glyphicon-plus"/> Create
+                            </button>
                         </div>
                     </form>
                     <ul className="nav navbar-nav navbar-right">
