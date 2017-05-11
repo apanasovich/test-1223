@@ -5,19 +5,22 @@ function handleInputChange(event) {
     this.setState({[name]: value});
 }
 
+function updateTaskList() {
+    $.ajax({
+        url: "/tasks",
+        success: result => this.setState({tasks: result})
+    });
+}
 
 class TaskList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {tasks: []};
+        this.updateTaskList = updateTaskList.bind(this);
     }
 
     componentDidMount() {
-        let self = this;
-        $.ajax({
-            url: "/tasks",
-            success: result => self.setState({tasks: result})
-        });
+        this.updateTaskList();
     }
 
     render() {
@@ -48,7 +51,7 @@ class TaskCreateForm extends React.Component {
         this.handleInputChange = handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
-	
+
     handleSubmit() {
         $.ajax({
             url: "/tasks",
@@ -75,18 +78,29 @@ class TaskCreateForm extends React.Component {
                         <div className="modal-body">
                             <form>
                                 <div className="form-group">
-                                    <label for="summary">Summary:</label>
-                                    <input type="text" className="form-control" name="summary" value={this.state.summary} onChange={this.handleInputChange}/>
+                                    <label htmlFor="summary">Summary:</label>
+                                    <input name="summary"
+                                           type="text"
+                                           className="form-control"
+                                           value={this.state.summary}
+                                           onChange={this.handleInputChange}/>
                                 </div>
                                 <div className="form-group">
-                                    <label for="description">Description:</label>
-                                    <textarea className="form-control" name="description" value={this.state.description} onChange={this.handleInputChange}/>
+                                    <label htmlFor="description">Description:</label>
+                                    <textarea name="description"
+                                              className="form-control"
+                                              value={this.state.description}
+                                              onChange={this.handleInputChange}/>
                                 </div>
                             </form>
                         </div>
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-primary" onClick={this.handleSubmit}>Create</button>
-                            <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="button"
+                                    className="btn btn-primary"
+                                    onClick={this.handleSubmit}>Create</button>
+                            <button type="button"
+                                    className="btn btn-default"
+                                    data-dismiss="modal">Close</button>
                         </div>
                     </div>
                 </div>
