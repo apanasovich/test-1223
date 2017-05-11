@@ -133,11 +133,13 @@ class Task extends React.Component {
     }
 
     handleDelete(e) {
+        const id = this.props.task.ID;
+        alert(id);
         $.ajax({
             url: "/tasks",
             type: "DELETE",
             data: {
-                id: this.props.task.ID
+                id: id
             },
             success: result => {
                 alert("Deleted");
