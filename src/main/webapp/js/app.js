@@ -143,6 +143,7 @@ class NavBar extends React.Component {
                             data-target="#taskCreateFormModal">
                         <span className="glyphicon glyphicon-plus"/> Create
                     </button>
+                    <input type="text" className="form-control" placeholder="Search"/>
                     <button className="btn btn-default" type="submit">
                         <i className="glyphicon glyphicon-search"/>
                     </button>
