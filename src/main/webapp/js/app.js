@@ -160,7 +160,7 @@ class Task extends React.Component {
                     <strong>{this.props.task.SUMMARY}</strong>
                     <div className="pull-right">
                         <div className="dropdown">
-                            <button className="btn btn-primary btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
+                            <button className="btn btn-primary btn-xs dropdown-toggle" type="button" data-toggle="dropdown">
                                 <span className="caret"/>
                             </button>
                             <ul className="dropdown-menu dropdown-menu-right">
