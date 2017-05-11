@@ -12,8 +12,6 @@ abstract class ServletBase : HttpServlet() {
     protected val mapper = ObjectMapper()
 
     protected fun connect(): Connection {
-        val cpds = ComboPooledDataSource()
-        cpds.jdbcUrl = System.getenv("JDBC_DATABASE_URL")
         val connection = cpds.connection
         Versions.migrate(connection, Versions.TARGET_VERSION)
         return connection
@@ -27,6 +25,13 @@ abstract class ServletBase : HttpServlet() {
         outputStream.use { out ->
             mapper.writeValue(out, o)
             out.flush()
+        }
+    }
+    
+    companion object {
+        private val cpds = ComboPooledDataSource().also {
+            it.jdbcUrl = System.getenv("JDBC_DATABASE_URL")
+            it.maxPoolSize = 10
         }
     }
 }
