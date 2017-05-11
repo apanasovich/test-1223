@@ -1,3 +1,13 @@
+$(".modal").on("shown.bs.modal", function()  { // any time a modal is shown
+    const urlReplace = "#" + $(this).attr('id'); // make the hash the id of the modal shown
+    history.pushState(null, null, urlReplace); // push state that hash into the url
+});
+
+// If a pushstate has previously happened and the back button is clicked, hide any modals.
+$(window).on('popstate', function() {
+    $(".modal").modal('hide');
+});
+
 function handleInputChange(event) {
     const target = event.target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
