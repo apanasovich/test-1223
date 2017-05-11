@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletResponse
 
 @WebServlet(name = "EnvServlet", urlPatterns = arrayOf("/env"))
 class EnvServlet : ServletBase() {
-    override fun doGet(req: HttpServletRequest, resp: HttpServletResponse) {
+    override fun get(req: HttpServletRequest, resp: HttpServletResponse) {
         resp.sendJsonOutput(System.getenv())
     }
 }

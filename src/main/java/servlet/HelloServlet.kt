@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletResponse
 
 @WebServlet(name = "HelloServlet", urlPatterns = arrayOf("/hello"))
 class HelloServlet : ServletBase() {
-    override fun doGet(req: HttpServletRequest, resp: HttpServletResponse) {
+    override fun get(req: HttpServletRequest, resp: HttpServletResponse) {
         resp.sendJsonOutput(mapOf("msg" to "Боброго времени суток тебе, ${req.getParameter("name")}!"))
     }
 }

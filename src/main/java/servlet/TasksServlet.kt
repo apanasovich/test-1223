@@ -9,13 +9,13 @@ import javax.servlet.http.HttpServletResponse
 
 @WebServlet(name = "TasksServlet", urlPatterns = arrayOf("/tasks"))
 class TasksServlet : ServletBase() {
-    override fun doGet(req: HttpServletRequest, resp: HttpServletResponse) {
+    override fun get(req: HttpServletRequest, resp: HttpServletResponse) {
         resp.sendJsonOutput(connect().use {
             it.select("SELECT * FROM TASKS.TASKS ORDER BY ID")
         })
     }
 
-    override fun doPost(req: HttpServletRequest, resp: HttpServletResponse) {
+    override fun post(req: HttpServletRequest, resp: HttpServletResponse) {
         connect().use {
             val id = it.insertReturning(
                     "INSERT INTO TASKS.TASKS(SUMMARY, DESCRIPTION) VALUES(?, ?) RETURNING ID",
@@ -25,8 +25,8 @@ class TasksServlet : ServletBase() {
             resp.sendJsonOutput(mapOf("ID" to id))
         }
     }
-    
-    override fun doDelete(req: HttpServletRequest, resp: HttpServletResponse) {
+
+    override fun delete(req: HttpServletRequest, resp: HttpServletResponse) {
         connect().use {
             val count = it.update("DELETE FROM TASKS.TASKS WHERE ID = ?", req.requiredArg("id").toInt())
             resp.sendJsonOutput(mapOf("DELETED" to count))
