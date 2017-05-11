@@ -71,7 +71,6 @@ class TaskCreateForm extends React.Component {
                 $("#taskCreateFormModal").modal("hide");
             },
             error: (xhr, textStatus, errorThrown) => {
-                $("#taskCreateFormModal").modal("hide");
                 console.log(errorThrown + textStatus);
                 console.log(xhr);
                 const err = JSON.parse(xhr.responseText);
