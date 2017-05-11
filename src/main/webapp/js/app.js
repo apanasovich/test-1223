@@ -150,7 +150,7 @@ class NavBar extends React.Component {
                             </div>
                         </div>
                         <div className="input-group">
-                            <button className="btn btn-success navbar-btn"
+                            <button className="btn btn-danger navbar-btn"
                                     data-toggle="modal"
                                     data-target="#taskCreateFormModal">
                                 <span className="glyphicon glyphicon-plus"/> Create
