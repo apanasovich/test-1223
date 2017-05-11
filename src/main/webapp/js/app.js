@@ -15,6 +15,10 @@ function updateTaskList() {
     });
 }
 
+function preventDefault(e) {
+    e.preventDefault();
+}
+
 class TaskList extends React.Component {
     constructor(props) {
         super(props);
@@ -150,7 +154,8 @@ class NavBar extends React.Component {
                                     </button>
                                     <button className="btn btn-danger"
                                             data-toggle="modal"
-                                            data-target="#taskCreateFormModal">
+                                            data-target="#taskCreateFormModal"
+                                            onClick={preventDefault}>
                                         <span className="glyphicon glyphicon-plus"/> Create
                                     </button>
                                 </div>
