@@ -58,7 +58,6 @@ class TaskCreateForm extends React.Component {
                 description: this.state.description
             },
             success: result => {
-                alert("Created task #" + result.ID);
                 $("#taskCreateFormModal").modal("hide");
             }
         });
