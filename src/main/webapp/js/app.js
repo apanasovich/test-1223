@@ -59,6 +59,7 @@ class TaskCreateForm extends React.Component {
             error: (xhr, textStatus, errorThrown) => {
                 $("#taskCreateFormModal").modal("hide");
                 console.log(errorThrown + textStatus);
+                console.log(xhr);
                 alert("Error " + xhr.toString());
             }
         });
