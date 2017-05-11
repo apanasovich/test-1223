@@ -105,7 +105,7 @@ class TaskCreateForm extends React.Component {
                                 <span className="glyphicon glyphicon-ok"/> Create
                             </button>
                             <button type="button"
-                                    className="btn btn-default"
+                                    className="btn"
                                     data-dismiss="modal">
                                 Close
                             </button>
@@ -124,6 +124,18 @@ class Task extends React.Component {
                 <div className="panel-heading">
                     <span className="badge badge-primary" style={{marginRight: "8px"}}>#{this.props.task.ID}</span>
                     <strong>{this.props.task.SUMMARY}</strong>
+                    <div className="pull-right">
+                        <div className="dropdown">
+                            <button className="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                                <span className="caret"/>
+                            </button>
+                            <ul className="dropdown-menu">
+                                <li><a href="#">Delete</a></li>
+                                <li><a href="#">...</a></li>
+                                <li><a href="#">...</a></li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
                 <div className="panel-body">{this.props.task.DESCRIPTION}</div>
             </div>
