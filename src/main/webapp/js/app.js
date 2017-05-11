@@ -190,7 +190,7 @@ class NavBar extends React.Component {
                         {/*<li><a href="#">Page 2</a></li>*/}
                     </ul>
                     <form className="navbar-form navbar-left">
-                        <div className="input-group">
+                        <div className="input-group br">
                             <input type="text" className="form-control" placeholder="Search"/>
                             <div className="input-group-btn">
                                 <div className="btn-group">
