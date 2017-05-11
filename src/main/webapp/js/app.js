@@ -133,14 +133,9 @@ class Task extends React.Component {
     }
 
     handleDelete(e) {
-        const id = this.props.task.ID;
-        alert(id);
         $.ajax({
-            url: "/tasks",
+            url: "/tasks?id=" + encodeURIComponent(this.props.task.ID),
             type: "DELETE",
-            data: {
-                id: id
-            },
             success: result => {
                 alert("Deleted");
             },
@@ -161,8 +156,8 @@ class Task extends React.Component {
                     <strong>{this.props.task.SUMMARY}</strong>
                     <div className="pull-right">
                         <div className="dropdown">
-                            <button className="btn btn-primary btn-xs dropdown-toggle" type="button" data-toggle="dropdown">
-                                <span className="caret"/>
+                            <button className="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown">
+                                <span className="glyphicon-menu-hamburger"/>
                             </button>
                             <ul className="dropdown-menu dropdown-menu-right">
                                 <li><a href="#" onClick={this.handleDelete}>Delete Task</a></li>
