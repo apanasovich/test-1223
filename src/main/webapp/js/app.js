@@ -1,3 +1,10 @@
+function handleInputChange(event) {
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
+    this.setState({[name]: value});
+}
+
 class TaskList extends React.Component {
     constructor(props) {
         super(props);
@@ -34,6 +41,28 @@ class TaskList extends React.Component {
 }
 
 class TaskCreateForm extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {summary: "", description: ""};
+        this.handleInputChange = handleInputChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleSubmit() {
+        $.ajax({
+            url: "/tasks",
+            type: "POST",
+            data: {
+                summary: this.state.summary,
+                description: this.state.description
+            },
+            success: result => {
+                alert(result);
+                $("#taskCreateFormModal").modal("hide");
+            }
+        });
+    }
+
     render() {
         return (
             <div id="taskCreateFormModal" className="modal fade" role="dialog">
@@ -47,16 +76,16 @@ class TaskCreateForm extends React.Component {
                             <form>
                                 <div className="form-group">
                                     <label for="summary">Summary:</label>
-                                    <input type="text" className="form-control" id="summary"/>
+                                    <input type="text" className="form-control" id="summary" value={this.state.summary} onChange={this.handleInputChange}/>
                                 </div>
                                 <div className="form-group">
                                     <label for="description">Description:</label>
-                                    <textarea className="form-control" id="description"/>
+                                    <textarea className="form-control" id="description" value={this.state.description} onChange={this.handleInputChange}/>
                                 </div>
                             </form>
                         </div>
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-primary" data-dismiss="modal">Create</button>
+                            <button type="button" className="btn btn-primary" onClick={this.handleSubmit}>Create</button>
                             <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
                         </div>
                     </div>
