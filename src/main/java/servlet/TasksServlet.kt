@@ -2,6 +2,7 @@ package servlet
 
 import db.insertReturning
 import db.select
+import db.update
 import javax.servlet.annotation.WebServlet
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
