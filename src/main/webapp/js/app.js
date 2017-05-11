@@ -77,11 +77,11 @@ handleInputChange(event) {
                             <form>
                                 <div className="form-group">
                                     <label for="summary">Summary:</label>
-                                    <input type="text" className="form-control" id="summary" value={this.state.summary} onChange={this.handleInputChange}/>
+                                    <input type="text" className="form-control" name="summary" value={this.state.summary} onChange={this.handleInputChange}/>
                                 </div>
                                 <div className="form-group">
                                     <label for="description">Description:</label>
-                                    <textarea className="form-control" id="description" value={this.state.description} onChange={this.handleInputChange}/>
+                                    <textarea className="form-control" name="description" value={this.state.description} onChange={this.handleInputChange}/>
                                 </div>
                             </form>
                         </div>
