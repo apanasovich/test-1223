@@ -9,7 +9,7 @@ function updateTaskList() {
     $.ajax({
         url: "/tasks",
         success: result => this.setState({tasks: result}),
-        error: (xhr, textStatus, errorThrown) =>{
+        error: (xhr, textStatus, errorThrown) => {
             // Handle error
         }
     });
@@ -29,16 +29,6 @@ class TaskList extends React.Component {
     render() {
         return (
             <div>
-                <div>
-                    <h2>Task List
-                        <button
-                            style={{marginLeft: "8px"}}
-                            className="btn btn-default"
-                            data-toggle="modal" data-target="#taskCreateFormModal">
-                            <span className="glyphicon glyphicon-plus"/>
-                        </button>
-                    </h2>
-                </div>
                 {this.state.tasks.map(task => (
                     <Task task={task}/>
                 ))}
@@ -66,7 +56,7 @@ class TaskCreateForm extends React.Component {
             success: result => {
                 $("#taskCreateFormModal").modal("hide");
             },
-            error: (xhr, textStatus, errorThrown) =>{
+            error: (xhr, textStatus, errorThrown) => {
                 $("#taskCreateFormModal").modal("hide");
                 console.log(errorThrown + textStatus);
                 alert("Error " + xhr.toString());
@@ -105,10 +95,14 @@ class TaskCreateForm extends React.Component {
                         <div className="modal-footer">
                             <button type="button"
                                     className="btn btn-primary"
-                                    onClick={this.handleSubmit}>Create</button>
+                                    onClick={this.handleSubmit}>
+                                <span className="glyphicon glyphicon-ok"/> Create
+                            </button>
                             <button type="button"
                                     className="btn btn-default"
-                                    data-dismiss="modal">Close</button>
+                                    data-dismiss="modal">
+                                Close
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -131,6 +125,37 @@ class Task extends React.Component {
     }
 }
 
+class NavBar extends React.Component {
+    render() {
+        return (
+            <nav className="navbar navbar-inverse">
+                <div className="container-fluid">
+                    <div className="navbar-header">
+                        <a className="navbar-brand" href="#">Task List</a>
+                    </div>
+                    <ul className="nav navbar-nav">
+                        <li className="active"><a href="#">Home</a></li>
+                        <li><a href="#">Page 1</a></li>
+                        <li><a href="#">Page 2</a></li>
+                    </ul>
+                    <button className="btn btn-success navbar-btn"
+                            data-toggle="modal"
+                            data-target="#taskCreateFormModal">
+                        <span className="glyphicon glyphicon-plus"/> Create
+                    </button>
+                    <button className="btn btn-default" type="submit">
+                        <i className="glyphicon glyphicon-search"/>
+                    </button>
+                    <ul className="nav navbar-nav navbar-right">
+                        <li><a href="#"><span className="glyphicon glyphicon-user"/> Sign Up</a></li>
+                        <li><a href="#"><span className="glyphicon glyphicon-log-in"/> Login</a></li>
+                    </ul>
+                </div>
+            </nav>
+        );
+    }
+}
+
 class App extends React.Component {
     constructor(props) {
         super(props);
@@ -138,11 +163,6 @@ class App extends React.Component {
         this.changeName = this.changeName.bind(this);
         this.submitClick = this.submitClick.bind(this);
         this.openCreateNewTaskForm = this.openCreateNewTaskForm.bind(this);
-    }
-
-    openCreateNewTaskForm(e) {
-        e.preventDefault();
-        alert("Zz")
     }
 
     changeName(e) {
@@ -166,7 +186,8 @@ class App extends React.Component {
     render() {
         return (
             <div>
-                <TaskList openCreateNewTaskForm={this.openCreateNewTaskForm}/>
+                <NavBar/>
+                <TaskList/>
                 <TaskCreateForm />
                 {/*<form onSubmit={this.submitClick}>*/}
                 {/*<label>Кто ты?<br/>*/}
