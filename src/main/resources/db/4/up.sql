@@ -1,1 +1,1 @@
-alter table TASKS.TASKS add column DONE boolean default TRUE
+alter table TASKS.TASKS add column DONE boolean default FALSE

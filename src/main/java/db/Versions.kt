@@ -4,7 +4,7 @@ import java.sql.Connection
 import java.util.*
 
 object Versions {
-    const val TARGET_VERSION = 4
+    const val TARGET_VERSION = 3
 
     private val versions = TreeMap<Int, Pair<Connection.() -> Unit, Connection.() -> Unit>>()
 
