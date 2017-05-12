@@ -4,13 +4,14 @@ import java.sql.Connection
 import java.util.*
 
 object Versions {
-    const val TARGET_VERSION = 2
+    const val TARGET_VERSION = 3
 
     private val versions = TreeMap<Int, Pair<Connection.() -> Unit, Connection.() -> Unit>>()
 
     init {
         registerFromDir("db", 1)
         registerFromDir("db", 2)
+        registerFromDir("db", 3)
     }
 
     val max = if (versions.isEmpty()) 0 else versions.lastKey()!!
