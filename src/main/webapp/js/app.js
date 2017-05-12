@@ -19,12 +19,14 @@ function updateTaskList() {
     let tasks = {};
     $.ajax({
         url: "/tasks",
-        success: result => result.map(item => tasks[item.ID] = item),
+        success: result => {
+            result.map(item => tasks[item.ID] = item);
+            this.setState({tasks: tasks});
+        },
         error: (xhr, textStatus, errorThrown) => {
             alert(textStatus);
         }
     });
-    this.setState({tasks: tasks})
 }
 
 function preventDefault(e) {
