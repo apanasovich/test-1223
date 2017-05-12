@@ -238,7 +238,7 @@ class App extends React.Component {
     }
 
     removeTask(id) {
-        this.state.tasks.delete(id);
+        delete this.state.tasks[id];
         this.setState({tasks: this.state.tasks});
     }
 
