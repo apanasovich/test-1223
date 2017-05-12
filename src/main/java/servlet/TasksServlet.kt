@@ -10,9 +10,16 @@ import javax.servlet.http.HttpServletResponse
 @WebServlet(name = "TasksServlet", urlPatterns = arrayOf("/tasks"))
 class TasksServlet : ServletBase() {
     override fun get(req: HttpServletRequest, resp: HttpServletResponse) {
-        resp.sendJsonOutput(connect().use {
-            it.select("SELECT * FROM TASKS.TASKS ORDER BY ID")
-        })
+        val id = req.getAttribute("id")
+        if (id != null) {
+            resp.sendJsonOutput(connect().use {
+                mapOf("task" to it.select("SELECT * FROM TASKS.TASKS WHERE ID = ?", (id as String).toInt()).stream().findFirst().orElse(null))
+            })
+        } else {
+            resp.sendJsonOutput(connect().use {
+                it.select("SELECT * FROM TASKS.TASKS ORDER BY ID")
+            })
+        }
     }
 
     override fun post(req: HttpServletRequest, resp: HttpServletResponse) {

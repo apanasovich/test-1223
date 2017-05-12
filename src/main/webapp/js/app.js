@@ -1,10 +1,10 @@
-$(".modal").on("shown.bs.modal", function()  { // any time a modal is shown
+$(".modal").on("shown.bs.modal", function () { // any time a modal is shown
     const urlReplace = "#" + $(this).attr('id'); // make the hash the id of the modal shown
     history.pushState(null, null, urlReplace); // push state that hash into the url
 });
 
 // If a pushstate has previously happened and the back button is clicked, hide any modals.
-$(window).on('popstate', function() {
+$(window).on('popstate', function () {
     $(".modal").modal('hide');
 });
 
@@ -16,13 +16,15 @@ function handleInputChange(event) {
 }
 
 function updateTaskList() {
+    let tasks = {};
     $.ajax({
         url: "/tasks",
-        success: result => this.setState({tasks: result}),
+        success: result => result.map(item => tasks[item.ID] = item),
         error: (xhr, textStatus, errorThrown) => {
             // Handle error
         }
     });
+    this.setState({tasks: tasks})
 }
 
 function preventDefault(e) {
@@ -30,21 +32,11 @@ function preventDefault(e) {
 }
 
 class TaskList extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {tasks: []};
-        this.updateTaskList = updateTaskList.bind(this);
-    }
-
-    componentDidMount() {
-        this.updateTaskList();
-    }
-
     render() {
         return (
             <div>
-                {this.state.tasks.map(task => (
-                    <Task task={task}/>
+                {Object.keys(this.props.tasks).map(key => (
+                    <Task task={this.props.tasks[key]} removeTask={this.props.removeTask}/>
                 ))}
             </div>
         );
@@ -69,6 +61,12 @@ class TaskCreateForm extends React.Component {
             },
             success: result => {
                 $("#taskCreateFormModal").modal("hide");
+                $.ajax({
+                    url: "/tasks?id=" + encodeURIComponent(result.ID),
+                    success: res => {
+                        this.props.addTask(res.task);
+                    }
+                });
             },
             error: (xhr, textStatus, errorThrown) => {
                 console.log(errorThrown + textStatus);
@@ -133,11 +131,13 @@ class Task extends React.Component {
     }
 
     handleDelete(e) {
+        e.preventDefault();
+        const id = this.props.task.ID;
         $.ajax({
-            url: "/tasks?id=" + encodeURIComponent(this.props.task.ID),
+            url: "/tasks?id=" + encodeURIComponent(id),
             type: "DELETE",
             success: result => {
-                alert("Deleted");
+                this.props.removeTask(id);
             },
             error: (xhr, textStatus, errorThrown) => {
                 console.log(errorThrown + textStatus);
@@ -217,45 +217,31 @@ class NavBar extends React.Component {
 class App extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {name: "", greeting: ""};
-        this.changeName = this.changeName.bind(this);
-        this.submitClick = this.submitClick.bind(this);
+        this.state = {tasks: {}};
+        this.updateTaskList = updateTaskList.bind(this);
+        this.addTask = this.addTask.bind(this);
     }
 
-    changeName(e) {
-        this.setState({name: e.target.value});
+    componentDidMount() {
+        this.updateTaskList();
     }
 
-    submitClick(e) {
-        e.preventDefault();
-        let self = this;
-        $.ajax({
-            url: "/hello",
-            data: {
-                name: this.state.name
-            },
-            success: function (result) {
-                self.setState({greeting: result.msg});
-            }
-        });
+    addTask(task) {
+        this.state.tasks[task.ID] = task;
+        this.setState({tasks: this.state.tasks});
+    }
+
+    removeTask(id) {
+        this.state.tasks.delete(id);
+        this.setState({tasks: this.state.tasks});
     }
 
     render() {
         return (
             <div>
                 <NavBar/>
-                <TaskList/>
-                <TaskCreateForm />
-                {/*<form onSubmit={this.submitClick}>*/}
-                {/*<label>Кто ты?<br/>*/}
-                {/*<input type="text"*/}
-                {/*value={this.state.name}*/}
-                {/*onChange={this.changeName} />*/}
-                {/*</label>*/}
-                {/*<br/>*/}
-                {/*<input type="submit" value="Отправить на сервер"/>*/}
-                {/*</form>*/}
-                {/*<Greeting greeting={this.state.greeting}/>*/}
+                <TaskList tasks={this.state.tasks} removeTask={this.removeTask}/>
+                <TaskCreateForm addTask={this.addTask}/>
             </div>
         );
     }
