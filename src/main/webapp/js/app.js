@@ -32,6 +32,10 @@ function preventDefault(e) {
 }
 
 class TaskList extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
     componentDidMount() {
         console.log(this.props.tasks);
         //alert(this.props.tasks.toJSON());
@@ -40,6 +44,7 @@ class TaskList extends React.Component {
             console.log(this.props.tasks[key]);
         });
     }
+
     render() {
         return (
             <div>
