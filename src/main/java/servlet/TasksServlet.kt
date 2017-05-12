@@ -11,15 +11,22 @@ import javax.servlet.http.HttpServletResponse
 class TasksServlet : ServletBase() {
     override fun get(req: HttpServletRequest, resp: HttpServletResponse) {
         val id = req.getParameter("id")
+        val query = req.getParameter("query")
+        var result: Any? = null
         if (id != null) {
-            resp.sendJsonOutput(connect().use {
+            result = connect().use {
                 mapOf("task" to it.select("SELECT * FROM TASKS.TASKS WHERE ID = ?", (id as String).toInt()).stream().findFirst().orElse(null))
-            })
+            }
+        } else if (query != null) {
+            result = connect().use {
+                it.select("SELECT * FROM TASKS.TASKS WHERE SUMMARY LIKE '%${query}%' ORDER BY ID")
+            }
         } else {
-            resp.sendJsonOutput(connect().use {
+            result = connect().use {
                 it.select("SELECT * FROM TASKS.TASKS ORDER BY ID")
-            })
+            }
         }
+        resp.sendJsonOutput(result);
     }
 
     override fun post(req: HttpServletRequest, resp: HttpServletResponse) {

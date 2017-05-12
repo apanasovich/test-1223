@@ -23,7 +23,7 @@ abstract class ServletBase : HttpServlet() {
                 if (it.isBlank()) throw IllegalArgumentException("'$name' should not be blank")
             }
 
-    protected fun HttpServletResponse.sendJsonOutput(o: Any) = also {
+    protected fun HttpServletResponse.sendJsonOutput(o: Any?) = also {
         setHeader("Content-Type", "application/json;charset=utf-8")
         outputStream.use { out ->
             mapper.writeValue(out, o)
