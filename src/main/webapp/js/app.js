@@ -1,4 +1,3 @@
-
 $(".modal").on("shown.bs.modal", function () { // any time a modal is shown
     const urlReplace = "#" + $(this).attr('id'); // make the hash the id of the modal shown
     history.pushState(null, null, urlReplace); // push state that hash into the url
@@ -134,7 +133,28 @@ class TaskCreateForm extends React.Component {
 class Task extends React.Component {
     constructor(props) {
         super(props);
+        this.toggleDone = this.toggleDone.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
+        this.state = {done: props.task.DONE || false}
+    }
+
+    toggleDone(e) {
+        e.preventDefault();
+        const id = this.props.task.ID;
+        const done = !this.state.done;
+        $.ajax({
+            url: "/tasks?id=" + encodeURIComponent(id) + "&done=" + done,
+            type: "POST",
+            success: result => {
+                this.setState({done: done});
+            },
+            error: (xhr, textStatus, errorThrown) => {
+                console.log(errorThrown + textStatus);
+                console.log(xhr);
+                const err = JSON.parse(xhr.responseText);
+                alert("Error: " + err.error);
+            }
+        });
     }
 
     handleDelete(e) {
@@ -156,8 +176,10 @@ class Task extends React.Component {
     }
 
     render() {
+        const clazz = this.state.done ? "panel-default" : "panel-primary";
+
         return (
-            <div className="panel panel-default">
+            <div className={"panel " + clazz}>
                 <div className="panel-heading">
                     <span className="badge badge-primary" style={{marginRight: "8px"}}>#{this.props.task.ID}</span>
                     <strong>{this.props.task.SUMMARY}</strong>
@@ -167,8 +189,8 @@ class Task extends React.Component {
                                 Actions <span className="caret"/>
                             </a>
                             <ul className="dropdown-menu dropdown-menu-right">
-                                <li><a href="#" onClick={this.handleDelete}>Delete Task</a></li>
-                                <li><a href="#">...</a></li>
+                                <li><a onClick={this.handleDelete}>Delete Task</a></li>
+                                <li><a onClick={this.toggleDone}>{ this.state.done ? "Mark as todo" : "Mark as done" }</a></li>
                                 <li><a href="#">...</a></li>
                             </ul>
                         </div>
@@ -209,22 +231,22 @@ class NavBar extends React.Component {
                             <input type="text" ref="taskQueryInput" className="form-control" placeholder="Search"/>
                             <div className="input-group-btn">
                                 {/*<div className="btn-group">*/}
-                                    <button className="btn btn-default" onClick={this.searchTasks}>
-                                        <i className="glyphicon glyphicon-search"/>
-                                    </button>
-                                    
+                                <button className="btn btn-default" onClick={this.searchTasks}>
+                                    <i className="glyphicon glyphicon-search"/>
+                                </button>
+
                                 {/*</div>*/}
-								
+
                             </div>
                         </div>
-					</form>
-					<form className="navbar-form navbar-left">
-						<button className="btn btn-danger"
-                                            data-toggle="modal"
-                                            data-target="#taskCreateFormModal"
-                                            onClick={preventDefault}>
-                                        <span className="glyphicon glyphicon-plus"/> Create
-                                    </button>
+                    </form>
+                    <form className="navbar-form navbar-left">
+                        <button className="btn btn-danger"
+                                data-toggle="modal"
+                                data-target="#taskCreateFormModal"
+                                onClick={preventDefault}>
+                            <span className="glyphicon glyphicon-plus"/> Create
+                        </button>
                     </form>
                     <ul className="nav navbar-nav navbar-right">
                         <li><a href="#"><span className="glyphicon glyphicon-user"/> Sign Up</a></li>
