@@ -10,20 +10,16 @@ import javax.servlet.http.HttpServletResponse
 @WebServlet(name = "TasksServlet", urlPatterns = arrayOf("/tasks"))
 class TasksServlet : ServletBase() {
     override fun get(req: HttpServletRequest, resp: HttpServletResponse) {
-        val id = req.getParameter("id")
-        val query = req.getParameter("query")
-        var result: Any? = null
-        if (id != null) {
-            result = connect().use {
-                mapOf("task" to it.select("SELECT * FROM TASKS.TASKS WHERE ID = ?", (id as String).toInt()).stream().findFirst().orElse(null))
-            }
-        } else if (query != null) {
-            result = connect().use {
-                it.select("SELECT * FROM TASKS.TASKS WHERE SUMMARY LIKE '%${query}%' ORDER BY ID")
-            }
-        } else {
-            result = connect().use {
-                it.select("SELECT * FROM TASKS.TASKS ORDER BY ID")
+        val id = req.getParameter("id").takeUnless { it.isNullOrBlank() }?.toInt() ?: 0
+        val query = req.getParameter("query")?.replace(' ', '%')
+        val result: Any = connect().use {
+            when {
+                id != 0 ->
+                    mapOf("task" to it.select("SELECT * FROM TASKS.TASKS WHERE ID = ?", id).firstOrNull())
+                query != null ->
+                    it.select("SELECT * FROM TASKS.TASKS WHERE SUMMARY LIKE '%$query%' OR DESCRIPTION LIKE '%$query%' ORDER BY ID")
+                else ->
+                    it.select("SELECT * FROM TASKS.TASKS ORDER BY ID")
             }
         }
         resp.sendJsonOutput(result);
