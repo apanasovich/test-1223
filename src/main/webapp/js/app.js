@@ -176,7 +176,7 @@ class Task extends React.Component {
     }
 
     render() {
-        const clazz = this.state.done ? "panel-default" : "panel-primary";
+        const clazz = this.state.done ? "panel-default" : "panel-success";
 
         return (
             <div className={"panel " + clazz}>
