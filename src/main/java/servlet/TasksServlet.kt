@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse
 @WebServlet(name = "TasksServlet", urlPatterns = arrayOf("/tasks"))
 class TasksServlet : ServletBase() {
     override fun get(req: HttpServletRequest, resp: HttpServletResponse) {
-        val id = req.getAttribute("id")
+        val id = req.getParameter("id")
         if (id != null) {
             resp.sendJsonOutput(connect().use {
                 mapOf("task" to it.select("SELECT * FROM TASKS.TASKS WHERE ID = ?", (id as String).toInt()).stream().findFirst().orElse(null))
