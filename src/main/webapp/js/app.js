@@ -1,3 +1,4 @@
+
 $(".modal").on("shown.bs.modal", function () { // any time a modal is shown
     const urlReplace = "#" + $(this).attr('id'); // make the hash the id of the modal shown
     history.pushState(null, null, urlReplace); // push state that hash into the url
@@ -15,10 +16,11 @@ function handleInputChange(event) {
     this.setState({[name]: value});
 }
 
-function updateTaskList() {
+function updateTaskList(query) {
+    const q = typeof query === "string" ? "?query=" + encodeURIComponent(query) : "";
     let tasks = {};
     $.ajax({
-        url: "/tasks",
+        url: "/tasks" + q,
         success: result => {
             result.map(item => tasks[item.ID] = item);
             this.setState({tasks: tasks});
@@ -179,6 +181,17 @@ class Task extends React.Component {
 }
 
 class NavBar extends React.Component {
+    constructor(props) {
+        super(props);
+        this.searchTasks = this.searchTasks.bind(this);
+    }
+
+    searchTasks(e) {
+        e.preventDefault();
+        const query = this.refs.taskQueryInput.value;
+        this.props.searchTasks(query);
+    }
+
     render() {
         return (
             <nav className="navbar navbar-inverse">
@@ -193,10 +206,10 @@ class NavBar extends React.Component {
                     </ul>
                     <form className="navbar-form navbar-left">
                         <div className="input-group br">
-                            <input type="text" className="form-control" placeholder="Search"/>
+                            <input type="text" ref="taskQueryInput" className="form-control" placeholder="Search"/>
                             <div className="input-group-btn">
                                 <div className="btn-group">
-                                    <button className="btn btn-default" type="submit">
+                                    <button className="btn btn-default" onClick={this.searchTasks}>
                                         <i className="glyphicon glyphicon-search"/>
                                     </button>
                                     <button className="btn btn-danger"
@@ -226,10 +239,15 @@ class App extends React.Component {
         this.updateTaskList = updateTaskList.bind(this);
         this.addTask = this.addTask.bind(this);
         this.removeTask = this.removeTask.bind(this);
+        this.searchTasks = this.searchTasks.bind(this);
     }
 
     componentDidMount() {
-        this.updateTaskList();
+        this.updateTaskList(null);
+    }
+
+    searchTasks(query) {
+        this.updateTaskList(query)
     }
 
     addTask(task) {
@@ -245,7 +263,7 @@ class App extends React.Component {
     render() {
         return (
             <div>
-                <NavBar/>
+                <NavBar searchTasks={this.searchTasks}/>
                 <TaskList tasks={this.state.tasks} removeTask={this.removeTask}/>
                 <TaskCreateForm addTask={this.addTask}/>
             </div>
