@@ -1,4 +1,4 @@
-alter table TASKS.TASKS alter SUMMARY column type VARCHAR(1000)
+alter table TASKS.TASKS alter column SUMMARY type text
 /
-alter table TASKS.TASKS alter DESCRIPTION column type VARCHAR(4000)
+alter table TASKS.TASKS alter column DESCRIPTION type text
 /
