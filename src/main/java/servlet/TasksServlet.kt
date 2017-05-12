@@ -28,9 +28,10 @@ class TasksServlet : ServletBase() {
     override fun post(req: HttpServletRequest, resp: HttpServletResponse) {
         connect().use {
             val id = it.insertReturning(
-                    "INSERT INTO TASKS.TASKS(SUMMARY, DESCRIPTION) VALUES(?, ?) RETURNING ID",
+                    "INSERT INTO TASKS.TASKS(SUMMARY, DESCRIPTION, DONE) VALUES(?, ?, ?) RETURNING ID",
                     req.requiredArg("summary"),
-                    req.requiredArg("description"))
+                    req.requiredArg("description"),
+                    req.getParameter("done") != "false")
 
             resp.sendJsonOutput(mapOf("ID" to id))
         }
