@@ -41,7 +41,7 @@ class TasksServlet : ServletBase() {
                 req.optionalArg("description")?.also { fields["DESCRIPTION"] = it }
                 req.optionalArg("done")?.also { fields["DONE"] = it != "false" }
                 it.update("""
-                    UPDATE TASKS.TASK SET ${fields.keys.map { "$it = ?" }.joinToString(separator = ", ")}
+                    UPDATE TASKS.TASKS SET ${fields.keys.map { "$it = ?" }.joinToString(separator = ", ")}
                     WHERE ID = ?
                 """, *(ArrayList(fields.values).also { it += id }.toTypedArray()))
             }
