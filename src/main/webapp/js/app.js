@@ -68,6 +68,7 @@ class TaskCreateForm extends React.Component {
                 $.ajax({
                     url: "/tasks?id=" + encodeURIComponent(result.ID),
                     success: res => {
+                        console.log("added", res);
                         this.props.addTask(res.task);
                     }
                 });
