@@ -43,7 +43,7 @@ class TasksServlet : ServletBase() {
                 it.update("""
                     UPDATE TASKS.TASK SET ${fields.keys.map { "$it = ?" }.joinToString(separator = ", ")}
                     WHERE ID = ?
-                """, *(fields.values.toTypedArray()))
+                """, *(ArrayList(fields.values).also { it += id }.toTypedArray()))
             }
 
             resp.sendJsonOutput(mapOf("ID" to id))
