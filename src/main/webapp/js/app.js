@@ -33,8 +33,11 @@ function preventDefault(e) {
 
 class TaskList extends React.Component {
     componentDidMount() {
+        console.log(this.props.tasks);
+        alert(this.props.tasks.toJSON());
         Object.keys(this.props.tasks).map(key => {
-            alert(this.props.tasks[key]);
+            console.log(key);
+            console.log(this.props.tasks[key]);
         });
     }
     render() {
