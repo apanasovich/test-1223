@@ -32,12 +32,17 @@ function preventDefault(e) {
 }
 
 class TaskList extends React.Component {
+    componentDidMount() {
+        Object.keys(this.props.tasks).map(key => {
+            alert(key);
+        });
+    }
     render() {
         return (
             <div>
-                {Object.keys(this.props.tasks).map(key => (
-                    <Task task={this.props.tasks[key]} removeTask={this.props.removeTask}/>
-                ))}
+                {Object.keys(this.props.tasks).map(key => {
+                    return <Task task={this.props.tasks[key]} removeTask={this.props.removeTask}/>
+                })}
             </div>
         );
     }
