@@ -21,7 +21,7 @@ function updateTaskList() {
         url: "/tasks",
         success: result => result.map(item => tasks[item.ID] = item),
         error: (xhr, textStatus, errorThrown) => {
-            // Handle error
+            alert(textStatus);
         }
     });
     this.setState({tasks: tasks})
