@@ -208,19 +208,21 @@ class NavBar extends React.Component {
                         <div className="input-group br">
                             <input type="text" ref="taskQueryInput" className="form-control" placeholder="Search"/>
                             <div className="input-group-btn">
-                                <div className="btn-group">
+                                {/*<div className="btn-group">*/}
                                     <button className="btn btn-default" onClick={this.searchTasks}>
                                         <i className="glyphicon glyphicon-search"/>
                                     </button>
-                                    <button className="btn btn-danger"
+                                    
+                                {/*</div>*/}
+								
+                            </div>
+                        </div>
+						<button className="btn btn-danger"
                                             data-toggle="modal"
                                             data-target="#taskCreateFormModal"
                                             onClick={preventDefault}>
                                         <span className="glyphicon glyphicon-plus"/> Create
                                     </button>
-                                </div>
-                            </div>
-                        </div>
                     </form>
                     <ul className="nav navbar-nav navbar-right">
                         <li><a href="#"><span className="glyphicon glyphicon-user"/> Sign Up</a></li>
