@@ -217,6 +217,8 @@ class NavBar extends React.Component {
 								
                             </div>
                         </div>
+					</form>
+					<form>
 						<button className="btn btn-danger"
                                             data-toggle="modal"
                                             data-target="#taskCreateFormModal"
