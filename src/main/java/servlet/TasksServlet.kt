@@ -11,13 +11,13 @@ import javax.servlet.http.HttpServletResponse
 class TasksServlet : ServletBase() {
     override fun get(req: HttpServletRequest, resp: HttpServletResponse) {
         val id = req.getParameter("id").takeUnless { it.isNullOrBlank() }?.toInt() ?: 0
-        val query = req.getParameter("query")?.replace(' ', '%')
+        val query = req.getParameter("query")?.replace(' ', '%')?.toUpperCase()
         val result: Any = connect().use {
             when {
                 id != 0 ->
                     mapOf("task" to it.select("SELECT * FROM TASKS.TASKS WHERE ID = ?", id).firstOrNull())
                 query != null ->
-                    it.select("SELECT * FROM TASKS.TASKS WHERE SUMMARY LIKE '%$query%' OR DESCRIPTION LIKE '%$query%' ORDER BY ID")
+                    it.select("SELECT * FROM TASKS.TASKS WHERE upper(SUMMARY) LIKE '%$query%' OR upper(DESCRIPTION) LIKE '%$query%' ORDER BY ID")
                 else ->
                     it.select("SELECT * FROM TASKS.TASKS ORDER BY ID")
             }
